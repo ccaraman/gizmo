@@ -43,7 +43,7 @@ func NewPublisher(cfg SNSConfig) (pubsub.Publisher, error) {
 		return p, errors.New("SNS region is required")
 	}
 
-	var creds = &credentials.Credentials{}
+	/* var creds = &credentials.Credentials{}
 	if cfg.AccessKey != "" {
 		creds = credentials.NewStaticCredentials(cfg.AccessKey, cfg.SecretKey, cfg.SessionToken)
 	} else if cfg.RoleARN != "" {
@@ -55,14 +55,14 @@ func NewPublisher(cfg SNSConfig) (pubsub.Publisher, error) {
 	} else {
 		creds = credentials.NewEnvCredentials()
 	}
-
+	*/ 
 	sess, err := session.NewSession()
 	if err != nil {
 		return p, err
 	}
 
 	p.sns = sns.New(sess, &aws.Config{
-		Credentials: creds,
+		//Credentials: creds,
 		Region:      &cfg.Region,
 		Endpoint:    cfg.EndpointURL,
 	})

@@ -245,7 +245,8 @@ func NewSubscriber(cfg SQSConfig) (pubsub.Subscriber, error) {
 // Message will decode protobufed message bodies and simply return
 // a byte slice containing the message body for all others types.
 func (m *subscriberMessage) Message() []byte {
-	pubsub.Log.Warnf("The message body  in string format :%s", m.message.String())
+	pubsub.Log.Warnf("The message in string format :%s", m.message.String())
+	pubsub.Log.Warnf("The message body :%s", *m.message.Body)
 	if !*m.sub.cfg.ConsumeBase64 {
 		return []byte(*m.message.Body)
 	}
@@ -285,9 +286,6 @@ func (m *subscriberMessage) Done() error {
 	return <-receipt
 }
 
-func (m *subscriberMessage) AwsMessage() *sqs.Message {
-	return *m.message
-}
 
 // Start will start consuming messages on the SQS queue
 // and emit any messages to the returned channel.

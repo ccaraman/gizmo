@@ -285,6 +285,10 @@ func (m *subscriberMessage) Done() error {
 	return <-receipt
 }
 
+func (m *subscriberMessage) AwsMessage() *sqs.Message {
+	return *m.message
+}
+
 // Start will start consuming messages on the SQS queue
 // and emit any messages to the returned channel.
 // If it encounters any issues, it will populate the Err() error

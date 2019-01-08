@@ -87,6 +87,7 @@ func (p *publisher) PublishRaw(_ context.Context, key string, m []byte) error {
 		TopicArn: &p.topic,
 		Subject:  &key,
 		Message:  aws.String(base64.StdEncoding.EncodeToString(m)),
+		MessageStructure: aws.String("json"),
 	}
 
 	_, err := p.sns.Publish(msg)
